@@ -1,0 +1,262 @@
+name: servarr
+services:
+    flaresolverr:
+        image: ghcr.io/flaresolverr/flaresolverr:latest
+        container_name: flaresolverr
+        environment:
+            - LOG_LEVEL=info
+            - LOG_HTML=false
+            - CAPTCHA_SOLVER=none
+            - TZ=Asia/Kolkata
+        ports:
+            - "8191:8191"
+        networks:
+            - servarrnetwork
+        restart: unless-stopped
+    bazarr:
+        cpu_shares: 90
+        command: []
+        container_name: bazarr
+        deploy:
+            resources:
+                limits:
+                    memory: "4004511744"
+        environment:
+            PGID: "1000"
+            PUID: "1000"
+            TZ: Asia/Kolkata
+        hostname: bazarr
+        image: lscr.io/linuxserver/bazarr:latest
+        networks:
+            servarrnetwork: null
+        ports:
+            - mode: ingress
+              target: 6767
+              published: "6767"
+              protocol: tcp
+        restart: unless-stopped
+        volumes:
+            - type: bind
+              source: /docker/servarr/bazarr
+              target: /config
+              bind:
+                create_host_path: true
+            - type: bind
+              source: /data
+              target: /data
+              bind:
+                create_host_path: true
+    jellyseerr:
+        cpu_shares: 90
+        command: []
+        container_name: jellyseerr
+        deploy:
+            resources:
+                limits:
+                    memory: "4004511744"
+        environment:
+            PGID: "1000"
+            PUID: "1000"
+            TZ: Asia/Kolkata
+        hostname: jellyseerr
+        image: fallenbagel/jellyseerr:latest
+        networks:
+            servarrnetwork: null
+        ports:
+            - mode: ingress
+              target: 5055
+              published: "5055"
+              protocol: tcp
+        restart: unless-stopped
+        volumes:
+            - type: bind
+              source: /docker/servarr/jellyseerr
+              target: /app/config
+              bind:
+                create_host_path: true
+    nzbget:
+        cpu_shares: 90
+        command: []
+        container_name: nzbget
+        deploy:
+            resources:
+                limits:
+                    memory: "4004511744"
+        environment:
+            PGID: "1000"
+            PUID: "1000"
+            TZ: Asia/Kolkata
+        hostname: nzbget
+        image: lscr.io/linuxserver/nzbget:latest
+        networks:
+            servarrnetwork: null
+        ports:
+            - mode: ingress
+              target: 6789
+              published: "6789"
+              protocol: tcp
+        restart: unless-stopped
+        volumes:
+            - type: bind
+              source: /docker/servarr/nzbget
+              target: /config
+              bind:
+                create_host_path: true
+            - type: bind
+              source: /data
+              target: /data
+              bind:
+                create_host_path: true
+    prowlarr:
+        cpu_shares: 90
+        command: []
+        container_name: prowlarr
+        deploy:
+            resources:
+                limits:
+                    memory: "4004511744"
+        environment:
+            PGID: "1000"
+            PUID: "1000"
+            TZ: Asia/Kolkata
+        hostname: prowlarr
+        image: lscr.io/linuxserver/prowlarr:latest
+        networks:
+            servarrnetwork: null
+        ports:
+            - mode: ingress
+              target: 9696
+              published: "9696"
+              protocol: tcp
+        restart: unless-stopped
+        volumes:
+            - type: bind
+              source: /docker/servarr/prowlarr
+              target: /config
+              bind:
+                create_host_path: true
+    qbittorrent:
+        cpu_shares: 90
+        command: []
+        container_name: qbittorrent
+        deploy:
+            resources:
+                limits:
+                    memory: "4004511744"
+        environment:
+            PGID: "1000"
+            PUID: "1000"
+            TZ: Asia/Kolkata
+            WEBUI_PORT: "8080"
+        hostname: qbittorrent
+        image: lscr.io/linuxserver/qbittorrent:latest
+        networks:
+            servarrnetwork: null
+        ports:
+            - mode: ingress
+              target: 8080
+              published: "8080"
+              protocol: tcp
+            - mode: ingress
+              target: 6881
+              published: "6881"
+              protocol: tcp
+            - mode: ingress
+              target: 6881
+              published: "6881"
+              protocol: udp
+        restart: unless-stopped
+        volumes:
+            - type: bind
+              source: /docker/servarr/qbittorrent
+              target: /config
+              bind:
+                create_host_path: true
+            - type: bind
+              source: /data
+              target: /data
+              bind:
+                create_host_path: true
+    radarr:
+        cpu_shares: 90
+        command: []
+        container_name: radarr
+        deploy:
+            resources:
+                limits:
+                    memory: "4004511744"
+        environment:
+            PGID: "1000"
+            PUID: "1000"
+            TZ: Asia/Kolkata
+        hostname: radarr
+        image: lscr.io/linuxserver/radarr:latest
+        networks:
+            servarrnetwork: null
+        ports:
+            - mode: ingress
+              target: 7878
+              published: "7878"
+              protocol: tcp
+        restart: unless-stopped
+        volumes:
+            - type: bind
+              source: /docker/servarr/radarr
+              target: /config
+              bind:
+                create_host_path: true
+            - type: bind
+              source: /data
+              target: /data
+              bind:
+                create_host_path: true
+    sonarr:
+        cpu_shares: 90
+        command: []
+        container_name: sonarr
+        deploy:
+            resources:
+                limits:
+                    memory: "4004511744"
+        environment:
+            PGID: "1000"
+            PUID: "1000"
+            TZ: Asia/Kolkata
+        hostname: sonarr
+        image: lscr.io/linuxserver/sonarr:latest
+        networks:
+            servarrnetwork: null
+        ports:
+            - mode: ingress
+              target: 8989
+              published: "8989"
+              protocol: tcp
+        restart: unless-stopped
+        volumes:
+            - type: bind
+              source: /docker/servarr/sonarr
+              target: /config
+              bind:
+                create_host_path: true
+            - type: bind
+              source: /data
+              target: /data
+              bind:
+                create_host_path: true
+networks:
+    default:
+        name: servarr_default
+    servarrnetwork:
+        name: servarrnetwork
+x-casaos:
+    author: self
+    category: self
+    hostname: ""
+    icon: ""
+    index: /
+    is_uncontrolled: false
+    port_map: ""
+    scheme: http
+    title:
+        custom: servarr
+
