@@ -88,25 +88,43 @@ Quick Start Guide
 - [Docker installed](infrastructure/docker/README.MD)
 - SSH access to your server (for remote management)
 
-**2. Deploying the Stack:**
+**2. Deploying the Stack (quick, safe steps):**
+
+Follow these steps on the server where you will run the containers. The examples assume you will place the repository in `homelab-stack` and run Compose from the `media` folder.
 
 ```bash
-# SSH into your server
-ssh user@your-server-ip
+# 1) (Optional) SSH to your server
+# ssh user@your-server-ip
 
-# Clone this repository
-git clone <this-repo> homelab-stack
+# 2) Clone repo and enter the media directory
+git clone https://github.com/<owner>/<repo>.git homelab-stack
 cd homelab-stack/media
 
-# Adjust compose.yaml for your paths and preferences
-# (Optional: use CasaOS GUI instead of CLI)
+# 3) Edit compose.yaml before starting
+# - Set host volume paths (media, downloads, configs)
+# - Check ports, UID/GID and any env vars in each service's section
+# Use your editor: e.g. nano, vim, or VS Code
+# vim compose.yaml
 
-# Start all services
+# 4) Start services (Docker Compose v2 syntax)
 docker compose up -d
 
-# Verify services are running
+# If your system uses the legacy plugin, use:
+# docker-compose up -d
+
+# 5) Verify running services
 docker compose ps
+
+# 6) Helpful service commands:
+# Start only specific services: docker compose up -d jellyfin prowlarr
+# Follow logs for a service: docker compose logs -f jellyfin
+# Stop services: docker compose down
 ```
+
+Notes:
+- Edit `compose.yaml` to match your host directory layout (see "Configure Storage Paths").
+- If you prefer a GUI, you can manage containers with CasaOS instead of the CLI.
+- Start one service at a time (for example, `jellyfin`) if you want to validate configuration before bringing up the whole stack.
 
 **3. Start with Jellyfin (Central Media Hub):**
 First, set up your media server: [Jellyfin Setup Guide](media/Jellyfin/README.MD)
