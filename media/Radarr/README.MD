@@ -18,33 +18,6 @@ Radarr uses the following directory structure (defined in the main media README)
 └── /incomplete             # In-progress downloads
 ```
 
-### Create Radarr Directories
-
-Before starting Radarr, create the required directories:
-
-```bash
-# Create Radarr config directory
-mkdir -p /docker/servarr/radarr
-
-# Create movie library directory
-mkdir -p /data/media/movies
-
-# Create shared download directories
-mkdir -p /data/downloads/combined/completed
-mkdir -p /data/downloads/combined/incomplete
-
-# Set proper permissions (adjust 1000:1000 to your PGID:PUID)
-chown -R 1000:1000 /docker/servarr/radarr /data/media/movies /data/downloads/combined
-find /docker/servarr/radarr -type d -exec chmod 755 {} \;
-find /data/media/movies -type d -exec chmod 755 {} \;
-find /data/downloads/combined -type d -exec chmod 755 {} \;
-```
-
-Or use this one-liner:
-```bash
-mkdir -p /docker/servarr/radarr /data/media/movies /data/downloads/combined/{completed,incomplete} && chown -R 1000:1000 /docker/servarr/radarr /data/media/movies /data/downloads/combined
-```
-
 ## 1. Install Docker
 - Follow the instructions in the `infrastructure` directory to install Docker and Docker Compose (see `infrastructure/docker/README.MD`).
 
@@ -110,7 +83,7 @@ radarr:
 - The config volume stores Radarr's database, settings, indexer configurations, and download history.
 - The movies volume should point to where your movie library will be organized.
 - The downloads volume should point to where your download clients save completed files.
-- **Important:** All directories must exist before Radarr starts to avoid permission issues.
+- Docker Compose will automatically create all required directories with the `create_host_path: true` setting.
 
 ## 3. Start the service
 

@@ -15,24 +15,6 @@ Bazarr uses the following directory structure:
 └── /movies                    # Movie library (mounted for subtitle scanning)
 ```
 
-### Create Bazarr Directories
-
-Before starting Bazarr, create the required directories:
-
-```bash
-# Create Bazarr config directory
-mkdir -p /docker/servarr/bazarr
-
-# Set proper permissions (adjust 1000:1000 to your PGID:PUID)
-chown -R 1000:1000 /docker/servarr/bazarr
-chmod 755 /docker/servarr/bazarr
-```
-
-Or use this one-liner:
-```bash
-mkdir -p /docker/servarr/bazarr && chown -R 1000:1000 /docker/servarr/bazarr && chmod 755 /docker/servarr/bazarr
-```
-
 ## 1. Install Docker
 - Follow the instructions in the `infrastructure` directory to install Docker and Docker Compose (see `infrastructure/docker/README.MD`).
 
@@ -90,7 +72,7 @@ bazarr:
 - The memory limit is set to ~4GB; adjust if needed based on your system resources.
 - The config volume stores Bazarr's configuration, database, and subtitle cache.
 - The media volume allows Bazarr to scan and manage subtitles for your shows and movies.
-- **Important:** Both directories must exist before Bazarr starts to avoid permission issues.
+- Docker Compose will automatically create all required directories with the `create_host_path: true` setting.
 
 ## 3. Start the service
 

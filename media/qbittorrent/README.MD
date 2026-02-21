@@ -20,8 +20,6 @@ qBittorrent uses the following directory structure (defined in the main media RE
 Before starting qBittorrent, create the required directories:
 
 ```bash
-# Create qBittorrent config directory
-mkdir -p /docker/servarr/qbittorrent
 
 # Create qBittorrent download directories
 mkdir -p /data/downloads/qbittorrent/completed
@@ -30,8 +28,7 @@ mkdir -p /data/downloads/qbittorrent/incomplete
 # Set proper permissions (adjust 1000:1000 to your PGID:PUID)
 chown -R 1000:1000 /docker/servarr/qbittorrent
 chown -R 1000:1000 /data/downloads/qbittorrent
-find /docker/servarr/qbittorrent -type d -exec chmod 755 {} \;
-find /data/downloads/qbittorrent -type d -exec chmod 755 {} \;
+
 ```
 
 Or use this one-liner:
@@ -113,7 +110,7 @@ qbittorrent:
 - Port `8080` is the web UI port (configured via `WEBUI_PORT` environment variable).
 - Ports `6881` (TCP/UDP) are used for DHT, LSD, and PEX peer discovery (optional; can be changed).
 - The config volume stores qBittorrent's settings, configuration, database, and download history.
-- **Important:** Both download directories must exist before qBittorrent starts to avoid permission issues.
+
 
 ## 3. Start the service
 

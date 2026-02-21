@@ -11,24 +11,6 @@ Jellyseerr uses the following directory structure (defined in the main media REA
 └── /config                 # Jellyseerr configuration, database, and settings
 ```
 
-### Create Jellyseerr Directories
-
-Before starting Jellyseerr, create the required directories:
-
-```bash
-# Create Jellyseerr config directory
-mkdir -p /docker/servarr/jellyseerr
-
-# Set proper permissions (adjust 1000:1000 to your PGID:PUID)
-chown -R 1000:1000 /docker/servarr/jellyseerr
-find /docker/servarr/jellyseerr -type d -exec chmod 755 {} \;
-```
-
-Or use this one-liner:
-```bash
-mkdir -p /docker/servarr/jellyseerr && chown -R 1000:1000 /docker/servarr/jellyseerr
-```
-
 ## 1. Install Docker
 - Follow the instructions in the `infrastructure` directory to install Docker and Docker Compose (see `infrastructure/docker/README.MD`).
 
@@ -80,7 +62,7 @@ jellyseerr:
 - Set `TZ` to your timezone (e.g., `Europe/London`, `America/New_York`, `Asia/Kolkata`).
 - The memory limit is set to ~4GB; adjust if needed based on your system resources.
 - The config volume stores Jellyseerr's settings, database, user accounts, and request history.
-- **Important:** The config directory must exist before Jellyseerr starts to avoid permission issues.
+- Docker Compose will automatically create all required directories with the `create_host_path: true` setting.
 
 ## 3. Start the service
 

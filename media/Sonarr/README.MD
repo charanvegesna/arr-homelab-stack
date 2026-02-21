@@ -18,33 +18,6 @@ Sonarr uses the following directory structure (defined in the main media README)
 └── /incomplete             # In-progress downloads
 ```
 
-### Create Sonarr Directories
-
-Before starting Sonarr, create the required directories:
-
-```bash
-# Create Sonarr config directory
-mkdir -p /docker/servarr/sonarr
-
-# Create TV show library directory
-mkdir -p /data/media/shows
-
-# Create shared download directories
-mkdir -p /data/downloads/combined/completed
-mkdir -p /data/downloads/combined/incomplete
-
-# Set proper permissions (adjust 1000:1000 to your PGID:PUID)
-chown -R 1000:1000 /docker/servarr/sonarr /data/media/shows /data/downloads/combined
-find /docker/servarr/sonarr -type d -exec chmod 755 {} \;
-find /data/media/shows -type d -exec chmod 755 {} \;
-find /data/downloads/combined -type d -exec chmod 755 {} \;
-```
-
-Or use this one-liner:
-```bash
-mkdir -p /docker/servarr/sonarr /data/media/shows /data/downloads/combined/{completed,incomplete} && chown -R 1000:1000 /docker/servarr/sonarr /data/media/shows /data/downloads/combined
-```
-
 ## 1. Install Docker
 - Follow the instructions in the `infrastructure` directory to install Docker and Docker Compose (see `infrastructure/docker/README.MD`).
 
@@ -110,7 +83,7 @@ sonarr:
 - The config volume stores Sonarr's database, settings, indexer configurations, and download history.
 - The shows volume should point to where your TV show library will be organized.
 - The downloads volume should point to where your download clients save completed files.
-- **Important:** All directories must exist before Sonarr starts to avoid permission issues.
+- Docker Compose will automatically create all required directories with the `create_host_path: true` setting.
 
 ## 3. Start the service
 

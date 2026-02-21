@@ -9,24 +9,6 @@ Flaresolverr uses a minimal directory structure for configuration:
 └── /config                    # Flaresolverr configuration (logs and settings)
 ```
 
-### Create Flaresolverr Directories
-
-Before starting Flaresolverr, create the required directories:
-
-```bash
-# Create Flaresolverr config directory
-mkdir -p /docker/servarr/flaresolverr
-
-# Set proper permissions (adjust 1000:1000 to your PGID:PUID)
-chown -R 1000:1000 /docker/servarr/flaresolverr
-chmod 755 /docker/servarr/flaresolverr
-```
-
-Or use this one-liner:
-```bash
-mkdir -p /docker/servarr/flaresolverr && chown -R 1000:1000 /docker/servarr/flaresolverr && chmod 755 /docker/servarr/flaresolverr
-```
-
 ## 1. Install Docker
 - Follow the instructions in the `infrastructure` directory to install Docker and Docker Compose (see `infrastructure/docker/README.MD`).
 
@@ -76,7 +58,7 @@ flaresolverr:
   - `CAPTCHA_SOLVER`: Can be `none` (no CAPTCHA solving) or `chromium` (for advanced CAPTCHA handling)
   - `TZ`: Set to your timezone (e.g., `Europe/London`, `America/New_York`, `Asia/Kolkata`)
 - The volume mount stores Flaresolverr logs and output for debugging purposes.
-- **Important:** The config directory must exist before Flaresolverr starts to avoid permission issues.
+- Docker Compose will automatically create all required directories with the `create_host_path: true` setting.
 
 ## 3. Start the service
 

@@ -11,24 +11,6 @@ Prowlarr uses the following directory structure (defined in the main media READM
 └── /config                 # Prowlarr configuration, database, and indexer settings
 ```
 
-### Create Prowlarr Directories
-
-Before starting Prowlarr, create the required directories:
-
-```bash
-# Create Prowlarr config directory
-mkdir -p /docker/servarr/prowlarr
-
-# Set proper permissions (adjust 1000:1000 to your PGID:PUID)
-chown -R 1000:1000 /docker/servarr/prowlarr
-find /docker/servarr/prowlarr -type d -exec chmod 755 {} \;
-```
-
-Or use this one-liner:
-```bash
-mkdir -p /docker/servarr/prowlarr && chown -R 1000:1000 /docker/servarr/prowlarr
-```
-
 ## 1. Install Docker
 - Follow the instructions in the `infrastructure` directory to install Docker and Docker Compose (see `infrastructure/docker/README.MD`).
 
@@ -80,7 +62,7 @@ prowlarr:
 - Set `TZ` to your timezone (e.g., `Europe/London`, `America/New_York`, `Asia/Kolkata`).
 - The memory limit is set to ~4GB; adjust if needed based on your system resources.
 - The config volume stores Prowlarr's database, settings, API keys, and indexer configurations.
-- **Important:** The config directory must exist before Prowlarr starts to avoid permission issues.
+- Docker Compose will automatically create all required directories with the `create_host_path: true` setting.
 
 ## 3. Start the service
 
