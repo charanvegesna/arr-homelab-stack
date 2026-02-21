@@ -160,7 +160,7 @@ tailscale:
   container_name: tailscale
   hostname: tailscale
   environment:
-    TS_AUTHKEY: "tskey-your-key-here"  # Generate from Tailscale account
+    TS_AUTHKEY: "<YOUR_TAILSCALE_API_KEY>"  # Generate from Tailscale account
     TS_EXTRA_ARGS: "--advertise-routes=10.0.0.0/8"  # Optional: for LAN access
   volumes:
     - /var/lib/tailscale:/var/lib/tailscale
