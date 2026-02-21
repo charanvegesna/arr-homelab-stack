@@ -108,13 +108,26 @@ docker compose up -d
 docker compose ps
 ```
 
-**3. Configure Each Service:**
-Each service has a dedicated guide with initial setup, configuration, and integration steps:
-- [Prowlarr](media/Prowlarr/README.MD) → [qBittorrent](media/qbittorrent/README.MD) → [Radarr](media/Radarr/README.MD)
-- [NZBGet](media/nzbget/README.MD) → [Sonarr](media/Sonarr/README.MD)
-- [Jellyfin](media/Jellyfin/README.MD) as your media server
-- [Jellyseerr](media/Jellyseerr/README.MD) for requests
-- [Bazarr](media/Bazarr/README.MD) for subtitles
+**3. Start with Jellyfin (Central Media Hub):**
+First, set up your media server: [Jellyfin Setup Guide](media/Jellyfin/README.MD)
+- This is the core service where all your media will be streamed from
+- Get it running and test playback before configuring downloaders
+
+**4. Configure Downloaders & Managers:**
+Set up the automation pipeline in this order for each download type:
+
+**For Movies (via Torrents):**
+- [Prowlarr](media/Prowlarr/README.MD) (indexer hub) → [qBittorrent](media/qbittorrent/README.MD) (download) → [Radarr](media/Radarr/README.MD) (auto-manage)
+
+**For TV Shows (via Torrents or Usenet):**
+- [Prowlarr](media/Prowlarr/README.MD) (indexer hub) → [NZBGet](media/nzbget/README.MD) or [qBittorrent](media/qbittorrent/README.MD) (download) → [Sonarr](media/Sonarr/README.MD) (auto-manage)
+
+**For Subtitles:**
+- [Bazarr](media/Bazarr/README.MD) (auto-download subtitles for Sonarr/Radarr content)
+
+**Protection & Requests:**
+- [Flaresolverr](media/Flaresolverr/README.MD) (bypass Cloudflare/protection on indexers)
+- [Jellyseerr](media/Jellyseerr/README.MD) (let users request new content)
 
 **4. Setup Remote Access (Tailscale):**
 Follow the [Tailscale setup guide](infrastructure/Tailscale/README.md) to access your homelab securely from anywhere without port forwarding.
@@ -157,10 +170,6 @@ See [Tailscale guide](infrastructure/Tailscale/README.md) for secure remote acce
 OS Installation & SSH
 -
 If you need to install the OS on an older server or laptop, follow [INSTALL_UBUNTU.md](INSTALL_UBUNTU.md) for creating a bootable USB, the installation steps, and configuring SSH access.
-
-Credits
--
-This setup was inspired by and reuses ideas from the TechHutTV homelab project: https://github.com/TechHutTV/homelab — thanks to the authors and community for their guidance.
 
 Documentation Status
 -
